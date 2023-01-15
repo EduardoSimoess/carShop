@@ -12,7 +12,7 @@ class CarService {
     const newCarODM = new CarODM();
     const newCar = await newCarODM.create(car);
     console.log(newCar);
-    return newCar;
+    return this.returnCar(newCar);
   }
 }
 

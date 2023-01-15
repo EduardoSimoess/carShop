@@ -27,7 +27,7 @@ class CarController {
     };
 
     const newCar = await this.service.createNewCar(car);
-    return this.res.status(201).json({ id: newCar.id, ...car });
+    return this.res.status(201).json(newCar);
   }
 }
 
