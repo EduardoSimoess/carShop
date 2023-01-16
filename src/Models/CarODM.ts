@@ -13,7 +13,6 @@ class CarODM {
 
   constructor() {
     this.schema = new Schema<ICar>({
-      // id: { type: String, required: true },
       model: { type: String, required: true },
       year: { type: Number, required: true },
       color: { type: String, required: true },
@@ -26,6 +25,20 @@ class CarODM {
   }
   public async create(car: ICar): Promise<ICar> {
     return this.model.create({ ...car });
+  }
+
+  public async findById(id: string): Promise<ICar | null> {
+    const car = await this.model.findById(id);
+    // if (!car) {
+    //   throw new Error('Car not found');
+    // }
+    return car;
+  }
+
+  public async findAll(): Promise<ICar[]> {
+    const list = await this.model.find();
+    // console.log(list);
+    return list;
   }
 }
 

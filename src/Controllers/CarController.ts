@@ -29,6 +29,31 @@ class CarController {
     const newCar = await this.service.createNewCar(car);
     return this.res.status(201).json(newCar);
   }
+
+  public async carById() {
+    const { id } = this.req.params;
+    
+    try {
+      const car = await this.service.carById(id);
+      console.log(car);
+      if (!car) {
+        return this.res.status(404).json({ message: 'Car not found' });
+      }
+      return this.res.status(200).json(car);
+    } catch (error) {
+      return this.res.status(422).json({ message: 'Invalid mongo id' });
+    }
+  }
+
+  public async carList() {
+    try {
+      const list = await this.service.carList();
+      // console.log(list);    
+      return this.res.status(200).json(list);
+    } catch (error) {
+      return this.res.status(422).json({ message: 'Invalid mongo id' });
+    }
+  }
 }
 
 export default CarController;
