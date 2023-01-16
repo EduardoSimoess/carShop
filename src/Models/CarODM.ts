@@ -21,7 +21,7 @@ class CarODM {
       doorsQty: { type: Number, required: true },
       seatsQty: { type: Number, required: true },
     });
-    this.model = models.Addition || model('Addition', this.schema);
+    this.model = models.cars || model('cars', this.schema);
   }
   public async create(car: ICar): Promise<ICar> {
     return this.model.create({ ...car });
