@@ -1,11 +1,9 @@
+import ICar from './ICar';
+
 interface IReturn {
-  model: string,
-  year: number,
-  color: string,
-  status: boolean,
-  buyValue: number,
-  doorsQty: number,
-  seatsQty: number,
+  status: number,
+  message?: string,
+  car?: ICar | null
 }
   
 export default IReturn;

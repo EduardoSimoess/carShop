@@ -20,7 +20,6 @@ class CarService {
     if (car) {
       const { model, year, color, status, buyValue, doorsQty, seatsQty } = car;
       const i = { id: car.id, model, year, color, status, buyValue, doorsQty, seatsQty };
-      console.log(i);
       return i;
     }
     return undefined;
@@ -29,7 +28,6 @@ class CarService {
   public async carList() {
     const carODM = new CarODM();
     const list = await carODM.findAll();
-    // console.log(list);
     
     const ajusted = list.map((item) => {
       const { model, year, color, status, buyValue, doorsQty, seatsQty } = item;
@@ -38,6 +36,18 @@ class CarService {
     });
 
     return ajusted;
+  }
+
+  public async carUpdated(id: string, carData: ICar) {
+    const carODM = new CarODM();
+    const updated = await carODM.updateById(id, carData);
+    if (updated.car) {
+      const { model, year, color, status, buyValue, doorsQty, seatsQty } = updated.car;
+      const i = { id, model, year, color, status, buyValue, doorsQty, seatsQty };
+      return { status: 200, car: i };
+    }
+
+    return updated;
   }
 }
 

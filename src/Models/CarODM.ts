@@ -6,6 +6,7 @@ import {
 } from 'mongoose';
 
 import ICar from '../Interfaces/ICar';
+import IReturn from '../Interfaces/IReturn';
 
 class CarODM {
   private schema: Schema;
@@ -29,16 +30,19 @@ class CarODM {
 
   public async findById(id: string): Promise<ICar | null> {
     const car = await this.model.findById(id);
-    // if (!car) {
-    //   throw new Error('Car not found');
-    // }
     return car;
   }
 
   public async findAll(): Promise<ICar[]> {
     const list = await this.model.find();
-    // console.log(list);
     return list;
+  }
+
+  public async updateById(id: string, newData: ICar): Promise<IReturn> {
+    const car = await this.findById(id);
+    if (!car) return { status: 404, message: 'Car not found' };
+    const updated = await this.model.findByIdAndUpdate(id, newData, { new: true });
+    return { status: 200, car: updated };
   }
 }
 

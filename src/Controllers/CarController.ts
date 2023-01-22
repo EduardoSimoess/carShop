@@ -2,6 +2,8 @@ import { NextFunction, Request, Response } from 'express';
 import ICar from '../Interfaces/ICar';
 import CarService from '../Services/CarService';
 
+const invalid = 'Invalid mongo id';
+
 class CarController {
   private req: Request;
   private res: Response;
@@ -41,7 +43,7 @@ class CarController {
       }
       return this.res.status(200).json(car);
     } catch (error) {
-      return this.res.status(422).json({ message: 'Invalid mongo id' });
+      return this.res.status(422).json({ message: invalid });
     }
   }
 
@@ -51,7 +53,19 @@ class CarController {
       // console.log(list);    
       return this.res.status(200).json(list);
     } catch (error) {
-      return this.res.status(422).json({ message: 'Invalid mongo id' });
+      return this.res.status(422).json({ message: invalid });
+    }
+  }
+
+  public async updatedCar() {
+    const { id } = this.req.params;
+    try {
+      const newCar = await this.service.carUpdated(id, this.req.body);
+      const { status, message, car } = newCar;
+      if (message) return this.res.status(status).json({ message });
+      return this.res.status(status).json(car);
+    } catch (error) {
+      return this.res.status(422).json({ message: invalid });
     }
   }
 }
