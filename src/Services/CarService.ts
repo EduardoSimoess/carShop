@@ -1,7 +1,6 @@
 import Car from '../Domains/Car';
 import ICar from '../Interfaces/ICar';
 import CarODM from '../Models/CarODM';
-// import IReturn from '../Interfaces/IReturn';
 
 class CarService {
   public returnCar(car: ICar): Car {

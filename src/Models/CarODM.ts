@@ -1,5 +1,5 @@
 import {
-  Model,
+  // Model,
   Schema,
   model,
   models,
@@ -7,13 +7,14 @@ import {
 
 import ICar from '../Interfaces/ICar';
 import IReturn from '../Interfaces/IReturn';
+import AbstractODM from './AbstractODM';
 
-class CarODM {
-  private schema: Schema;
-  private model: Model<ICar>;
+class CarODM extends AbstractODM<ICar> {
+  // protected schema: Schema;
+  // private model: Model<ICar>;
 
   constructor() {
-    this.schema = new Schema<ICar>({
+    super('cars', new Schema<ICar>({
       model: { type: String, required: true },
       year: { type: Number, required: true },
       color: { type: String, required: true },
@@ -21,22 +22,22 @@ class CarODM {
       buyValue: { type: Number, required: true },
       doorsQty: { type: Number, required: true },
       seatsQty: { type: Number, required: true },
-    });
+    }));
     this.model = models.cars || model('cars', this.schema);
   }
-  public async create(car: ICar): Promise<ICar> {
-    return this.model.create({ ...car });
-  }
+  // public async create(car: ICar): Promise<ICar> {
+  //   return this.model.create({ ...car });
+  // }
 
-  public async findById(id: string): Promise<ICar | null> {
-    const car = await this.model.findById(id);
-    return car;
-  }
+  // public async findById(id: string): Promise<ICar | null> {
+  //   const car = await this.model.findById(id);
+  //   return car;
+  // }
 
-  public async findAll(): Promise<ICar[]> {
-    const list = await this.model.find();
-    return list;
-  }
+  // public async findAll(): Promise<ICar[]> {
+  //   const list = await this.model.find();
+  //   return list;
+  // }
 
   public async updateById(id: string, newData: ICar): Promise<IReturn> {
     const car = await this.findById(id);
